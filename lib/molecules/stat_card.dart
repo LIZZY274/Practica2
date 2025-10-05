@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
-import '../atomd/custom_icon.dart';
-import '../atomd/custom_text.dart';
+import '../atoms/custom_icon.dart';
+import '../atoms/custom_text.dart';
 
 class StatCard extends StatelessWidget {
   final String title;
   final String value;
   final IconData icon;
   final Color iconColor;
+  final Color? backgroundColor;
+  final Color? textColor;
+  final double? elevation;
+  final VoidCallback? onTap;
 
   const StatCard({
     Key? key,
@@ -14,37 +18,52 @@ class StatCard extends StatelessWidget {
     required this.value,
     required this.icon,
     this.iconColor = Colors.blue,
+    this.backgroundColor,
+    this.textColor,
+    this.elevation = 4,
+    this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 4,
+      elevation: elevation,
+      color: backgroundColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CustomIcon(
-              icon: icon,
-              color: iconColor,
-              size: 40,
-            ),
-            const SizedBox(height: 12),
-            CustomText(
-              text: value,
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            const SizedBox(height: 4),
-            CustomText(
-              text: title,
-              style: Theme.of(context).textTheme.bodyMedium,
-              textAlign: TextAlign.center,
-            ),
-          ],
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(12),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CustomIcon(
+                icon: icon,
+                color: iconColor,
+                size: 40,
+              ),
+              const SizedBox(height: 12),
+              CustomText(
+                text: value,
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  color: textColor,
+                ),
+              ),
+              const SizedBox(height: 4),
+              CustomText(
+                text: title,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: textColor?.withOpacity(0.7),
+                ),
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
+          ),
         ),
       ),
     );

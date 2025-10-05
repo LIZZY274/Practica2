@@ -5,6 +5,8 @@ class CustomButtonBase extends StatelessWidget {
   final VoidCallback onPressed;
   final Color? backgroundColor;
   final Color? textColor;
+  final double? elevation;
+  final EdgeInsets? padding;
 
   const CustomButtonBase({
     Key? key,
@@ -12,6 +14,8 @@ class CustomButtonBase extends StatelessWidget {
     required this.onPressed,
     this.backgroundColor,
     this.textColor,
+    this.elevation,
+    this.padding,
   }) : super(key: key);
 
   @override
@@ -21,7 +25,8 @@ class CustomButtonBase extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         backgroundColor: backgroundColor ?? Theme.of(context).primaryColor,
         foregroundColor: textColor ?? Colors.white,
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        padding: padding ?? const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        elevation: elevation ?? 2,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),
